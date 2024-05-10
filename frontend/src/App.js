@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/home';
-import NavBar from './components/NavBar';
+import './App.css';
 
 function App() {
   return (
