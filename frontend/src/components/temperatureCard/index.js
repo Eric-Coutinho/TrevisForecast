@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import CryptoJS from 'crypto-js';
-import { SECRET } from '../../env';
-
+import { KEY } from '../../env';
 import styles from './styles.module.scss';
 
 export default function TemperatureCard() {
@@ -23,14 +21,10 @@ export default function TemperatureCard() {
     }
 
     async function getWeather() {
-        const encrypted = CryptoJS.AES.encrypt(JSON.stringify(position), SECRET).toString();
-        const response = await axios.post('http://localhost:8080/weather/', {
-            position: encrypted
-        });
-
-        const decrypted = CryptoJS.AES.decrypt(response.data.weather, SECRET).toString(CryptoJS.enc.Utf8);
-        const new_weather = JSON.parse(decrypted);
-        setWeather(new_weather);
+        if (position !== null) {
+            const response = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${position.latitude},${position.longitude}?key=${KEY}&iconSet=icons2`);
+            setWeather(response.data);
+        }
     }
 
     useEffect(() => {
@@ -38,18 +32,16 @@ export default function TemperatureCard() {
     }, []);
 
     useEffect(() => {
-        if (position != null) {
-            async function fetchData() {
-                await getWeather()
-            };
-            fetchData();
-            console.log(weather)
+        async function fetchData() {
+            await getWeather();
         }
-    }, [position])
+        fetchData();
+    }, [position]);
+
     return (
         <>
-            Temperatura: {weather == null ? 'not loaded' : weather.currentConditions.temp}°C
-            <img src={`weather_types/${weather == null ? 'not loaded' : weather.currentConditions.icon}.png`} />
+            Temperatura: {weather == null ? '' : (weather.currentConditions ? `${weather.currentConditions.temp}` : 'not available')}
+            {weather && weather.currentConditions && <img src={`weather_types/${weather.currentConditions.icon}.png`} alt="Weather Icon" />}
         </>
-    )
+    );
 }
