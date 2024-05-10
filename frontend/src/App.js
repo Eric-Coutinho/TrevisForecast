@@ -48,7 +48,7 @@ function App() {
 
   return (
     <div>
-      Temperatura: {weather == null ? 'not loaded' : weather.currentConditions.temp}°C
+      <img src={`weather_types/${weather == null ? 'not loaded' : weather.currentConditions.icon}.png`} />
     </div>
   );
 }

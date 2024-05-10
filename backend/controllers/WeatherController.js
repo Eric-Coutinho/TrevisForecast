@@ -18,7 +18,7 @@ module.exports = class WeatherController
             return res.status(400).send({ message: "Client's position is not valid!"});
         
         try {
-            const weather = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${position.latitude},${position.longitude}?key=${process.env.KEY}`);
+            const weather = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${position.latitude},${position.longitude}?key=${process.env.KEY}&iconSet=icons2`);
             
             const weather_string = JSON.stringify(weather.data);
             const encrypted = CryptoJS.AES.encrypt(weather_string, secret).toString();
