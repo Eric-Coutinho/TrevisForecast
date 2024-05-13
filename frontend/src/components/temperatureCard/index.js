@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { KEY } from '../../env';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import styles from './styles.module.scss';
 
 export default function TemperatureCard() {
@@ -41,8 +44,19 @@ export default function TemperatureCard() {
 
     return (
         <>
-            {weather && weather.currentConditions && <img src={`weather_types/${weather.currentConditions.icon}.png`} alt="Weather Icon" />}
-            {weather && weather.currentConditions && `Temperatura: ${parseInt(Math.floor(weather.currentConditions.temp - 32) * 0.55)}°C`}
+
+            <Container>
+                <div className={styles.containerBox}>
+                    <Row>
+                        <Col>
+                            {weather && weather.currentConditions && <img src={`weather_types/${weather.currentConditions.icon}.svg`} alt="Weather Icon" />}
+                        </Col>
+                        <Col className={styles.temperature}>
+                            {weather && weather.currentConditions && `${parseInt(Math.floor(weather.currentConditions.temp - 32) * 0.55)}°C`}
+                        </Col>
+                    </Row>
+                </div>
+            </Container>
         </>
     );
 }
