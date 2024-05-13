@@ -7,3 +7,17 @@ a {
     display: flex !important;
     justify-content: space-between !important;
 }
+
+.navText {
+    display: flex;
+    justify-content: end;
+    position: fixed;
+    right: 0
+}
+
+@media screen and (min-width: 992) {
+    .navText {
+        display: block;
+        justify-content: end;
+    }
+}
