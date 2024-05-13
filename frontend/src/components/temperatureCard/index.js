@@ -36,12 +36,13 @@ export default function TemperatureCard() {
             await getWeather();
         }
         fetchData();
+        console.log(weather)
     }, [position]);
 
     return (
         <>
-            Temperatura: {weather == null ? '' : (weather.currentConditions ? `${weather.currentConditions.temp}` : 'not available')}
             {weather && weather.currentConditions && <img src={`weather_types/${weather.currentConditions.icon}.png`} alt="Weather Icon" />}
+            {weather && weather.currentConditions && `Temperatura: ${parseInt(Math.floor(weather.currentConditions.temp - 32) * 0.55)}°C`}
         </>
     );
 }

@@ -2,3 +2,8 @@ a {
     text-decoration: none;
     color: rgba(0, 0, 0, 0.65);
 }
+
+.items {
+    display: flex !important;
+    justify-content: space-between !important;
+}
