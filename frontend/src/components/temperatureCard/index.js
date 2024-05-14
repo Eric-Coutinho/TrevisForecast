@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import styles from './styles.module.scss';
 
-export default function TemperatureCard() {
+export default function TemperatureCard({ style }) {
     const [position, setPosition] = useState(null);
     const [weather, setWeather] = useState(null);
 
@@ -27,6 +27,7 @@ export default function TemperatureCard() {
         if (position !== null) {
             const response = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${position.latitude},${position.longitude}?key=${KEY}&iconSet=icons2`);
             setWeather(response.data);
+            localStorage.setItem("weather", JSON.stringify(response.data));
         }
     }
 
@@ -43,20 +44,21 @@ export default function TemperatureCard() {
     }, [position]);
 
     return (
-        <>
-
+        <div style={ style }>
             <Container>
                 <div className={styles.containerBox}>
                     <Row>
-                        <Col>
-                            {weather && weather.currentConditions && <img src={`weather_types/${weather.currentConditions.icon}.svg`} alt="Weather Icon" />}
-                        </Col>
                         <Col className={styles.temperature}>
-                            {weather && weather.currentConditions && `${parseInt(Math.floor(weather.currentConditions.temp - 32) * 0.55)}°C`}
+                            {weather && weather.currentConditions && `${Math.round(Math.floor(weather.currentConditions.temp - 32) * 0.55)}°C`}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className={styles.iconCol}>
+                            {weather && weather.currentConditions && <img src={`weather_types/${weather.currentConditions.icon}.svg`} alt="Weather Icon" className={styles.icon}/>}
                         </Col>
                     </Row>
                 </div>
             </Container>
-        </>
+        </div>
     );
 }
