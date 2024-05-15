@@ -1,0 +1,22 @@
+.formContainer {
+    background-color: rgb(204, 204, 204);
+    padding: 1em;
+    border-radius: 15px;
+    width: 60%;
+}
+
+.inputDiv {
+    margin-block: 0.5em;
+}
+
+.btnArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn {
+    margin-block: 0.5em;
+    width: 50%;
+    padding: 0.5em;
+}

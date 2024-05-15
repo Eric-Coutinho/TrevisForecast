@@ -5,13 +5,13 @@ import Formulario from '../../components/Form'
 
 import Row from 'react-bootstrap/Row';
 
-export default function LoginPage() {
-    let fields = ["Email", "Senha"];
+export default function RegisterPage() {
+    let fields = ["Nome", "Email", "Senha", "Confirmar Senha"];
 
     return (
         <>
-            <Row style={{ marginTop: '15%' }}>
-                <Formulario title={"Login"} fields={fields} />
+            <Row style={{ marginTop: '10%' }}>
+                <Formulario title={"Registrar"} fields={fields} />
             </Row>
         </>
     )
