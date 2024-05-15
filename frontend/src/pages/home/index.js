@@ -9,29 +9,69 @@ import TemperatureCard from '../../components/temperatureCard';
 import InformationCard from '../../components/LocationCard';
 import WeatherCard from '../../components/weatherCard';
 
-export default function HomePage() {
+import axios from 'axios';
+import { KEY } from '../../env';
 
-    const [conditions, setConditions] = useState([]);
+export default function HomePage() {
+    const [position, setPosition] = useState(null);
+    const [weather, setWeather] = useState(null);
+
+    function setLocation() {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                console.log(position)
+                setPosition({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                });
+            });
+            return;
+        }
+        console.log("Geolocation is not available in your browser.");
+    }
+
+    async function getWeather() {
+        if (position !== null) {
+            const response = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${position.latitude},${position.longitude}?key=${KEY}&iconSet=icons2&unitGroup=metric`);
+            setWeather(response.data);
+            localStorage.setItem("weather", JSON.stringify(response.data));
+        }
+    }
 
     useEffect(() => {
-        let listCondition = ["Overcast", "Cloudcover: 100", "Dew: 57.1", "Feels Like: 57.1", "Humidity: 100", "Pressure: 1021", "Wind Direction: 60", "Wind Speed: 4.7"];
-        setConditions(listCondition);
-      }, []);
+        setLocation();
+    }, []);
+
+    useEffect(() => {
+        async function fetchData() {
+            await getWeather();
+        }
+        fetchData();
+    }, [position]);
 
     return (
-        <Row>
-            <Col sm="12" md="3" lg="3" className={styles.col}>
-                <Container className={styles.container}>
-                    <InformationCard type="Current Location" icone="pin" info="Curitiba - Brazil"/>
-                    <InformationCard type="Alerts" icone="alerts" info="Quick and severe temperature drop." />
-                </Container>
-            </Col>
-            <Col sm="12" md="6" lg="6" style={{ padding: '0', marginTop: '0.5em' }}>
-                <TemperatureCard style={{ paddingInline: '1em' }}/>
-            </Col>
-            <Col sm="12" md="3" lg="3" className={styles.col}>
-                <WeatherCard currentCondition={conditions}/>
-            </Col>
-        </Row>
+        <Container>
+            {weather != null &&
+                <div>
+                    <Row className={styles.row}>
+                        <Col sm="12" md="12" lg="12" className={styles.col}>
+                            <TemperatureCard weather={weather} />
+                        </Col>
+                    </Row>
+                    <Row className={styles.row}>
+                        <Col sm="12" md="12" lg="12" className={styles.col}>
+                            <WeatherCard weather={weather} />
+                        </Col>
+                    </Row>
+                </div>
+            }
+            {weather != null && weather.alerts.length > 0 &&
+                <Row className={styles.row}>
+                    <Col sm="12" md="12" lg="12" className={styles.col}>
+                        <InformationCard type="Alerts" icone="alerts" info={weather.alerts} />
+                    </Col>
+                </Row>
+            }
+        </Container>
     )
 }

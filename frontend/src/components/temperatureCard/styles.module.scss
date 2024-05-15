@@ -1,5 +1,9 @@
 .containerBox {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
     background-color: #f8f9fa;
+    width: 100%;
     border-radius: 20px;
     padding: 20px;
 }
@@ -17,6 +21,6 @@
 }
 
 .icon {
-    width: 75%;
+    width: 100%;
+    height: 100%;
 }
-

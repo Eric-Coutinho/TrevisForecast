@@ -1,4 +1,5 @@
 .cardBg {
+    position: relative;
     padding: 1em;
     border-radius: 10px;
     width: 100%;
@@ -21,4 +22,11 @@
 .location {
     font-size: 1em;
     text-align: justify;
+}
+
+.icon {
+    position: absolute;
+    margin-left: 0.4em;
+    left: 0;
+    top: 0;
 }

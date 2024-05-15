@@ -25,11 +25,15 @@ export default function InformationCard({ type, icone, info, style }) {
 
     return (
         <div className={styles.cardBg} style={{ ...style, backgroundColor: bg }}>
-            <div>
-                {icon} {type}:
+            <div className={styles.icon}>
+                {icon}
             </div>
             <div className={styles.location}>
-                {info}
+                <ul>
+                    {info.map((information, i) => {
+                        return <li key={i}>{information}</li>
+                    })}
+                </ul>
             </div>
         </div>
     )
