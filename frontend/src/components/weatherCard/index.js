@@ -3,7 +3,6 @@ import styles from './styles.module.scss';
 
 export default function WeatherCard({ weather }) {
     var current = weather.currentConditions;
-    console.log(current.winddir)
     return (
         <div className={styles.cardBg}>
             <div className={styles.location}>

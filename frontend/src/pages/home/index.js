@@ -6,23 +6,23 @@ import Col from 'react-bootstrap/Col';
 
 import styles from './styles.module.scss';
 import TemperatureCard from '../../components/temperatureCard';
-import InformationCard from '../../components/LocationCard';
 import WeatherCard from '../../components/weatherCard';
 
-import axios from 'axios';
-import { KEY } from '../../env';
+import { VisualCrossingAPI } from '../../api/visualcrossing';
+import { OpenCageAPI } from '../../api/opencage';
+import { KEY, KEY2 } from '../../env';
 
 export default function HomePage() {
+    const [coordinates, setCoordinates] = useState(null);
     const [position, setPosition] = useState(null);
     const [weather, setWeather] = useState(null);
 
-    function setLocation() {
+    function getCoordinates() {
         if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                console.log(position)
-                setPosition({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
+            navigator.geolocation.getCurrentPosition(async (coordinate) => {
+                setCoordinates({
+                    latitude: coordinate.coords.latitude,
+                    longitude: coordinate.coords.longitude,
                 });
             });
             return;
@@ -30,32 +30,52 @@ export default function HomePage() {
         console.log("Geolocation is not available in your browser.");
     }
 
+    async function getPosition() {
+        if (coordinates !== null) {
+            const response = await OpenCageAPI.get(`json?q=${coordinates.latitude}%2C${coordinates.longitude}&key=${KEY2}`);
+            const data = response.data.results[0].components;
+            setPosition({
+                city: data.city,
+                state: data.state,
+                country: data.country
+            });
+        }
+    }
+
     async function getWeather() {
-        if (position !== null) {
-            const response = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${position.latitude},${position.longitude}?key=${KEY}&iconSet=icons2&unitGroup=metric`);
+        if (coordinates !== null) {
+            const response = await VisualCrossingAPI.get(`${coordinates.latitude},${coordinates.longitude}?key=${KEY}&iconSet=icons2&unitGroup=metric`);
             setWeather(response.data);
             localStorage.setItem("weather", JSON.stringify(response.data));
         }
     }
 
     useEffect(() => {
-        setLocation();
-    }, []);
+        getCoordinates();
+    }, [])
+
+    useEffect(() => {
+        async function fetchData() {
+            await getPosition();
+        }
+        fetchData();
+    }, [coordinates]);
 
     useEffect(() => {
         async function fetchData() {
             await getWeather();
         }
         fetchData();
-    }, [position]);
+        console.log(weather)
+    }, [coordinates]);
 
     return (
-        <Container>
-            {weather != null &&
+        <Container style={{ marginTop: '3%' }}>
+            {weather != null && position != null &&
                 <div>
                     <Row className={styles.row}>
                         <Col sm="12" md="12" lg="12" className={styles.col}>
-                            <TemperatureCard weather={weather} />
+                            <TemperatureCard position={position} weather={weather} />
                         </Col>
                     </Row>
                     <Row className={styles.row}>
@@ -64,13 +84,6 @@ export default function HomePage() {
                         </Col>
                     </Row>
                 </div>
-            }
-            {weather != null && weather.alerts.length > 0 &&
-                <Row className={styles.row}>
-                    <Col sm="12" md="12" lg="12" className={styles.col}>
-                        <InformationCard type="Alerts" icone="alerts" info={weather.alerts} />
-                    </Col>
-                </Row>
             }
         </Container>
     )

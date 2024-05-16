@@ -1,15 +1,32 @@
 .containerBox {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #e2e2e2;
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+}
+
+.insideContainer {
     display: flex;
     justify-content: space-around;
     flex-direction: row;
-    background-color: #f8f9fa;
     width: 100%;
-    border-radius: 20px;
+    border-radius: 20px 20px 0 0;
     padding: 20px;
 }
 
 .temperature {
     font-size: 150px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.information {
+    font-size: 50px;
     font-weight: 500;
     text-align: center;
 }
@@ -23,4 +40,14 @@
 .icon {
     width: 100%;
     height: 100%;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.hour {
+    font-size: 25px;
+    color: grey;
 }
