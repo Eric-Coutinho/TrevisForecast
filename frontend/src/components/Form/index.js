@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './styles.module.scss'
 
@@ -16,6 +17,7 @@ export default function Formulario({ title, fields }) {
     const [email, setEmail] = useState({});
     const [password, setPassword] = useState({});
 
+    const navigate = useNavigate();
 
     useEffect(() => {
         localStorage.setItem('formData', JSON.stringify(formData));
@@ -49,30 +51,65 @@ export default function Formulario({ title, fields }) {
         setEmail(Email);
         setPassword(Senha);
 
-        const json = {
-            name,
-            email,
-            password
-        };
+        if (title == "Registrar") {
+            const json = {
+                name,
+                email,
+                password
+            };
 
-        const jsonCrypt = CryptoJS.AES.encrypt(
-            JSON.stringify(json),
-            SECRET
-        ).toString();
+            const jsonCrypt = CryptoJS.AES.encrypt(
+                JSON.stringify(json),
+                SECRET
+            ).toString();
 
-        console.log(jsonCrypt);
+            console.log(jsonCrypt);
 
-        try {
-            var res = await axios.post("http://localhost:8080/api/user/register", {
-                jsonCrypt
-            });
+            try {
+                var res = await axios.post("http://localhost:8080/api/user/register", {
+                    jsonCrypt
+                });
 
-            console.log(res.data.message);
-            setName("");
-            setEmail("");
-            setPassword("");
-        } catch (error) {
-            console.log(error);
+                console.log(res.data.message);
+                alert("Usuário Cadastrado com sucesso!");
+                setName("");
+                setEmail("");
+                setPassword("");
+                navigate('/');
+            } catch (error) {
+                alert("Falha ao criar usuário.");
+                console.log(error);
+            }
+        }
+
+        else if (title == "Login") {
+            const json = {
+                email,
+                password
+            };
+
+            const jsonCrypt = CryptoJS.AES.encrypt(
+                JSON.stringify(json),
+                SECRET
+            ).toString();
+
+            console.log("jsonCrypt: ", jsonCrypt);
+
+            try {
+                var res = await axios.post("http://localhost:8080/api/user/login", {
+                    jsonCrypt
+                });
+
+                console.log(res.data.message);
+                sessionStorage.setItem("token", res.data.token);
+                setName("");
+                setEmail("");
+                setPassword("");
+                navigate('/');
+            } catch (error) {
+                alert("Falha ao realizar login.");
+                console.log(error);
+            }
         }
     };
 
