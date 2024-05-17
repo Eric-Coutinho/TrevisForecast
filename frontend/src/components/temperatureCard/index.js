@@ -5,14 +5,14 @@ import InformationCard from '../../components/LocationCard';
 export default function TemperatureCard({ position, weather }) {
     var alerts = ['Tempestades fortes chegando a noite.']
     return (
-        <div style={{width: '100%'}}>
+        <div className={styles.temperatureCard}>
             <div className={styles.containerBox}>
                 <div className={styles.insideContainer}>
                     <div className={styles.iconCol}>
-                        {weather && weather.currentConditions && <img src={`weather_types/${weather.currentConditions.icon}.svg`} alt="Weather Icon" className={styles.icon} />}
+                        <img src={`weather_types/${weather.currentConditions.icon}.svg`} alt="Weather Icon" className={styles.icon} />
                     </div>
                     <div className={styles.temperature}>
-                        {weather && weather.currentConditions && `${weather.currentConditions.temp}°C`}
+                        {`${Math.round(weather.currentConditions.temp)}°C`}
                     </div>
                 </div>
                 <div className={styles.information}>

@@ -28,13 +28,13 @@ export default function NavBar() {
   };
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container style={{ margin: '0' }}>
-        <Navbar.Brand>
+    <Navbar >
+      <Container>
+        <Navbar.Brand style={{color: 'white'}}>
           Trevisan Forecast
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className={styles.navText}>
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>
             <Nav.Link>
               <Link to={'/places'} className={styles.link}>
@@ -51,7 +51,7 @@ export default function NavBar() {
                 Cadastro
               </Link>
             </Nav.Link>
-            <Nav.Link onClick={() => logOut()}>
+            <Nav.Link className={styles.link} onClick={() => logOut()}>
               Sair
             </Nav.Link>
           </Nav>

@@ -1,0 +1,35 @@
+.nextdaysCard {
+    display: flex;
+    flex-direction: column;
+    background-color: #e2e2e2;
+    padding: 20px;
+    border-radius: 20px;
+    margin: 10px;
+}
+
+.day {
+    text-align: start;
+    font-size: 18px;
+    font-weight: 500;
+    color: #747474;
+}
+
+.information {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: space-around;
+    align-items: center;
+}
+
+.tempdata {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.tempmin {
+    color: #747474;
+    font-weight: 500;
+}

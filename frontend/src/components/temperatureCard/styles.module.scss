@@ -1,26 +1,31 @@
+.temperatureCard {
+    background-color: #e2e2e2;
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding-bottom: 20px;
+}
+
 .containerBox {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #e2e2e2;
     width: 100%;
-    border-radius: 20px 20px 0 0;
-    padding: 20px;
 }
 
 .insideContainer {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     flex-direction: row;
     width: 100%;
     border-radius: 20px 20px 0 0;
-    padding: 20px;
+    padding: 50px 10px 50px 10px;
 }
 
 .temperature {
-    font-size: 150px;
+    font-size: 120px;
     font-weight: 500;
     text-align: center;
 }

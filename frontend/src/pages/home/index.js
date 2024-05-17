@@ -5,12 +5,16 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import styles from './styles.module.scss';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import TemperatureCard from '../../components/temperatureCard';
 import WeatherCard from '../../components/weatherCard';
+import Slider from "react-slick";
 
 import { VisualCrossingAPI } from '../../api/visualcrossing';
 import { OpenCageAPI } from '../../api/opencage';
 import { KEY, KEY2 } from '../../env';
+import NextdaysCard from '../../components/NextdaysCards';
 
 export default function HomePage() {
     const [coordinates, setCoordinates] = useState(null);
@@ -46,7 +50,6 @@ export default function HomePage() {
         if (coordinates !== null) {
             const response = await VisualCrossingAPI.get(`${coordinates.latitude},${coordinates.longitude}?key=${KEY}&iconSet=icons2&unitGroup=metric`);
             setWeather(response.data);
-            localStorage.setItem("weather", JSON.stringify(response.data));
         }
     }
 
@@ -69,8 +72,16 @@ export default function HomePage() {
         console.log(weather)
     }, [coordinates]);
 
+    var settings = {
+        infinite: true,
+        speed: 800,
+        slidesToShow: 4,
+        slidesToScroll: 2,
+        arrows: true
+    };
+
     return (
-        <Container style={{ marginTop: '3%' }}>
+        <Container style={{ marginTop: '3%', padding: 0 }}>
             {weather != null && position != null &&
                 <div>
                     <Row className={styles.row}>
@@ -81,6 +92,15 @@ export default function HomePage() {
                     <Row className={styles.row}>
                         <Col sm="12" md="12" lg="12" className={styles.col}>
                             <WeatherCard weather={weather} />
+                        </Col>
+                    </Row>
+                    <Row style={{ marginTop: '1em', zIndex: 1000 }}>
+                        <Col sm="12">
+                            <Slider {...settings}>
+                                {weather.days.map((weather, i) => {
+                                    return <NextdaysCard weather={weather} key={i} />
+                                })}
+                            </Slider>
                         </Col>
                     </Row>
                 </div>

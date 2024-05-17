@@ -8,11 +8,10 @@ a {
     justify-content: space-between !important; 
 }
 
-@media screen and (min-width: 992px) {
-    .navText {
-        display: flex;
-        justify-content: end;
-        position: fixed;
-        right: 0
-    }
+.link {
+    color: white;
+}
+
+.link:hover {
+    color: white;
 }
