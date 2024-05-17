@@ -5,6 +5,8 @@ const app = express();
 
 app.use(express.json());
 
+require('./startup/db')();
+
 app.use(cors({
     origin: '*'
 }));

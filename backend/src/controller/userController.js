@@ -5,47 +5,80 @@ require("dotenv").config();
 
 class UserController {
   static async register(req, res) {
-    var bytes = CryptoJS.AES.decrypt(req.body.jsonCrypt, process.env.SECRET);
-    const decrypted = bytes.toString(CryptoJS.enc.Utf8);
-    const json = JSON.parse(decrypted);
+    try {
+      const bytes = CryptoJS.AES.decrypt(req.body.jsonCrypt, process.env.SECRET);
+      const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+      const json = JSON.parse(decrypted);
 
-    const { name, email, password } = json;
+      if (!decrypted) {
+        return res.status(400).json({ message: "Erro ao descriptografar os dados." });
+      }
 
-    if (!name)
-      return res.status(400).json({ message: "O nome é obrigatório." });
-    if (!email)
-      return res.status(400).json({ message: "O email é obrigatório." });
-    if (!password)
-      return res.status(400).json({ message: "A senha é obrigatória." });
+      console.log("json: ", json);
 
-    const userExists = await User.findOne({ email: email });
+      const { name, email, password } = json;
 
-    if (userExists)
-      return res
-        .status(422)
-        .json({ message: "Usuário já existe, tente novamente" });
+      console.log("name: ", name);
+      console.log("email: ", email);
+      console.log("password: ", password);
 
-    const passwordCrypt = CryptoJS.AES.encrypt(
-      password,
-      process.env.SECRET
-    ).toString();
+      if (!name || !email || !password) {
+        return res.status(400).json({ message: "Nome, email ou senha ausentes nos dados descriptografados." });
+      }
+
+      const userExists = await User.findOne({ email: email });
+
+      if (userExists) {
+        return res.status(422).json({ message: "Usuário já existe, tente novamente." });
+      }
+
+      const passwordCrypt = CryptoJS.AES.encrypt(
+        password,
+        process.env.SECRET
+      ).toString();
+
+      console.log("passwordCrypt: ", passwordCrypt);
+
+      const user = new User({
+        name: name,
+        email: email,
+        password: passwordCrypt,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        deletedAt: null,
+      });
+
+      await User.create(user);
+      return res.status(201).json({ message: "Usuário cadastrado com sucesso." });
+    } catch (error) {
+      return res.status(500).json({ message: "Algo falhou.", error: error.message });
+    }
+  }
+
+  static async registerTeste(req, res) {
+    const { name, email, password } = req.body
+    const userExists = await User.findOne({ email: email })
+    if (userExists) {
+      return res.status(422).json({ message: "Usuário já existe, tente novamente." });
+    }
 
     const user = new User({
       name: name,
       email: email,
-      password: passwordCrypt,
+      password: password,
       createdAt: Date.now(),
       updatedAt: Date.now(),
       deletedAt: null,
     });
-
     try {
+
       await User.create(user);
-      res.status(201).send({ message: "Usuário cadastrado com sucesso." });
+      return res.status(201).json({ message: "Usuário cadastrado com sucesso." });
     } catch (error) {
-      res.status(500).send({ message: "Algo falhou,", data: error.message });
+      return res.status(500).json({ message: "Algo falhou.", error: error.message });
     }
   }
+
 
   static async login(req, res) {
     var bytes = CryptoJS.AES.decrypt(req.body.jsonCrypt, process.env.SECRET);
@@ -103,7 +136,7 @@ class UserController {
     try {
       const user = await User.findByIdAndDelete(id);
 
-      if(!user)
+      if (!user)
         return res.status(404).send({ message: "Usuário não encontrado." });
 
       res.status(201).send({ message: "Usuário removido com sucesso." });
