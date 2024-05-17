@@ -60,11 +60,11 @@ export default function Formulario({ title, fields }) {
             SECRET
         ).toString();
 
-        console.log(jsonCrypt.toString());
+        console.log(jsonCrypt);
 
         try {
             var res = await axios.post("http://localhost:8080/api/user/register", {
-                jsonCrypt,
+                jsonCrypt
             });
 
             console.log(res.data.message);

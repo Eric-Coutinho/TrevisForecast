@@ -10,12 +10,12 @@ const User = mongoose.model('User',
     email: {
       type: String,
       required: true,
-      minLenght: 6,
+      minLenght: 3,
     },
     password: {
       type: String,
       required: true,
-      minLenght: 6,
+      minLenght: 3,
     },
     createdAt: {
       type: Date,
