@@ -1,9 +1,6 @@
 .cardBg {
-    background-color: rgb(204, 204, 204);
     padding: 1em;
     border-radius: 0 0 20px 20px;
-    width: 100%;
-    height: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -14,10 +11,21 @@
 .location {
     font-size: 1em;
     text-align: justify;
+    margin-bottom: 10px;
 }
 
 .image {
     width: 20px;
     height: 20px;
     margin-left: 5px;
+}
+
+@media screen and (max-width: 992px) {
+    .location {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
 }

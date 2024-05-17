@@ -77,11 +77,40 @@ export default function HomePage() {
         speed: 800,
         slidesToShow: 4,
         slidesToScroll: 2,
-        arrows: true
+        arrows: true,
+        dots: true,
+        responsive: [
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    initialSlide: 1,
+                    dots: false
+                }
+            },
+            {
+                breakpoint: 792,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    initialSlide: 1,
+                    dots: false
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: false
+                }
+            }
+        ]
     };
 
     return (
-        <Container style={{ marginTop: '3%', padding: 0 }}>
+        <Container className={styles.home}>
             {weather != null && position != null &&
                 <div>
                     <Row className={styles.row}>

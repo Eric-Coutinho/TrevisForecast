@@ -56,3 +56,18 @@
     font-size: 25px;
     color: grey;
 }
+
+@media screen and (max-width: 992px) {
+    .temperature {
+        font-size: 80px;
+    }    
+
+    .information {
+        font-size: 40px;
+    }
+
+    .insideContainer {
+        flex-direction: column;
+        padding: 20px 0 20px 0;
+    }
+}
