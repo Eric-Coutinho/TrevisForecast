@@ -1,8 +1,16 @@
 .formContainer {
-    background-color: rgb(204, 204, 204);
-    padding: 1em;
-    border-radius: 15px;
-    width: 60%;
+    margin-top: 10%;
+}
+
+.cardRow {
+    display: flex;
+    justify-content: center;
+}
+
+.cardBody {
+    background-color: #e2e2e2;
+    padding: 20px;
+    border-radius: 20px;
 }
 
 .inputDiv {
