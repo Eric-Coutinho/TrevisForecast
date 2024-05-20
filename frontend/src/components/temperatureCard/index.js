@@ -4,8 +4,15 @@ import InformationCard from '../../components/LocationCard';
 
 export default function TemperatureCard({ position, weather }) {
     var alerts = ['Tempestades fortes chegando a noite.']
+    var condition = weather.currentConditions.icon;
     return (
-        <div className={styles.temperatureCard}>
+        <div className={styles.temperatureCard} 
+        style={{
+            backgroundColor: 
+                condition.includes('day') ? '#00c1e9' :
+                condition.includes('night') ? '#000' :
+                '#878787'
+        }}>
             <div className={styles.containerBox}>
                 <div className={styles.insideContainer}>
                     <div className={styles.iconCol}>

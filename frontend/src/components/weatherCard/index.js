@@ -14,12 +14,14 @@ export default function WeatherCard({ weather }) {
             style={{
                 backgroundColor: 
                     condition.includes('snow') ? 'white' :
-                    condition.includes('sleet') ? '#aeffff' :
+                    condition.includes('sleet') ? '#7df4ff' :
                     condition.includes('thunder') ? '#3c6770':
-                    condition.includes('hail') ? '#87cefa' :
-                    condition.includes('rain') ? '#31d9ff' :
-                    condition.includes('showers') ? '#7ae7ff' :
-                    condition.includes('clear') ? '#00d2ff' :
+                    condition.includes('hail') ? '#5290b6' :
+                    condition.includes('rain') ? '#235cc4' :
+                    condition.includes('showers') ? '#9ae3fd' :
+                    condition.includes('night') ? '#000' :
+                    condition.includes('clear') ? '#00c1e9' :
+                    condition.includes('cloudy') ? '#d8d8d8' :
                     '#a9a9a9'
             }}
         >
