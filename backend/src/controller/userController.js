@@ -25,10 +25,14 @@ class UserController {
       return res.status(422).json({ message: "Usuário já existe, tente novamente." });
     }
 
+    console.log("password: ", password);
+
     const passwordCrypt = CryptoJS.AES.encrypt(
       password,
       process.env.SECRET
     ).toString();
+
+    console.log("passwordCrypt: ", passwordCrypt);
 
     const user = new User({
       name: name,
