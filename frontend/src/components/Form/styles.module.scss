@@ -1,7 +1,3 @@
-.formContainer {
-    margin-top: 10%;
-}
-
 .cardRow {
     display: flex;
     justify-content: center;
@@ -9,7 +5,7 @@
 
 .cardBody {
     background-color: #e2e2e2;
-    padding: 20px;
+    padding: 30px;
     border-radius: 20px;
 }
 
@@ -17,16 +13,38 @@
     margin-block: 0.5em;
 }
 
-.btnArea {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #474747;
 }
 
 .btn {
+    width: 100%;
     margin-block: 0.5em;
-    width: 50%;
     padding: 0.5em;
-    display: flex;
-    justify-content: center;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.title {
+    font-size: 50px;
+    text-align: center;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 576px) {
+    .cardBody {
+        background-color: transparent;
+    }
+
+    .title {
+        color: white;
+        font-size: 40px;
+    }
+
+    .label {
+        color: white;
+    }
 }

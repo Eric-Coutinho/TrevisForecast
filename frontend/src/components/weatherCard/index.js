@@ -7,18 +7,20 @@ import Col from 'react-bootstrap/Col';
 export default function WeatherCard({ weather }) {
     var current = weather.currentConditions;
     var condition = current.icon;
-    console.log(condition)
+
     return (
         <Container 
             className={styles.cardBg}
             style={{
                 backgroundColor: 
                     condition.includes('snow') ? 'white' :
+                    condition.includes('sleet') ? '#aeffff' :
                     condition.includes('thunder') ? '#3c6770':
-                    condition.includes('rain') ? '#20b0cf' :
-                    condition.includes('showers') ? '#14bee3' :
-                    condition.includes('cloudy') ? '#a9a9a9' :
-                    '#00d2ff'
+                    condition.includes('hail') ? '#87cefa' :
+                    condition.includes('rain') ? '#31d9ff' :
+                    condition.includes('showers') ? '#7ae7ff' :
+                    condition.includes('clear') ? '#00d2ff' :
+                    '#a9a9a9'
             }}
         >
             <Row style={{width: '100%'}}>

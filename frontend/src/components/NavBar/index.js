@@ -63,10 +63,10 @@ export default function NavBar() {
             <Modal.Title>Deseja finalizar sua sessão?</Modal.Title>
           </Modal.Header>
           <Modal.Footer>
-            <Button variant="danger" onClick={cancelLogout}>
+            <Button variant="secondary" onClick={cancelLogout}>
               Cancelar
             </Button>
-            <Button variant="success" onClick={confirmLogout}>
+            <Button variant="primary" onClick={confirmLogout}>
               Sair
             </Button>
           </Modal.Footer>

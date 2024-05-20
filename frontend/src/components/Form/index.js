@@ -13,7 +13,7 @@ import axios from "axios";
 import CryptoJS from "crypto-js";
 import { SECRET } from "../../env";
 
-export default function Formulario({ title, fields }) {
+export default function Formulario({ title, fields, margin }) {
     const [formData, setFormData] = useState({});
     const [name, setName] = useState({});
     const [email, setEmail] = useState({});
@@ -116,12 +116,12 @@ export default function Formulario({ title, fields }) {
     };
 
     return (
-        <Container className={styles.formContainer}>
+        <Container style={{ marginTop: margin ? margin : '10%' }}>
             <Row className={styles.cardRow}>
                 <Col sm="12" md="12" lg="6" className={styles.cardBody}>
-                    <h2 style={{ textAlign: 'center' }}>
+                    <div className={styles.title}>
                         {title}
-                    </h2>
+                    </div>
                     <Form>
                         <Form.Group className="mb-3">
                             {fields.map((field, i) => {
@@ -134,17 +134,15 @@ export default function Formulario({ title, fields }) {
 
                                 return (
                                     <div key={i} className={styles.inputDiv}>
-                                        <Form.Label>{field}</Form.Label>
+                                        <Form.Label className={styles.label}>{field}</Form.Label>
                                         <Form.Control type={type} placeholder={field} onChange={(e) => handleInputChange(field, e.target.value)}></Form.Control>
                                     </div>
                                 )
                             })}
                         </Form.Group>
                     </Form>
-                    <div className={styles.btnArea}>
-                        <Button variant='primary' className={styles.btn} onClick={handleSubmit} type='submit'>{title}</Button>
-                        <Button variant='danger' className={styles.btn}>Cancelar</Button>
-                    </div>
+                    <Button variant='primary' className={styles.btn} onClick={handleSubmit} type='submit'>{title}</Button>
+                    <Button variant='secondary' className={styles.btn}>Cancelar</Button>
                 </Col>
             </Row>
         </Container>
