@@ -107,12 +107,11 @@ export default function Formulario({ title, fields }) {
                 let token = jwtDecode(response);
                 token = token.id;
 
-                // Salva apenas o id no sessionStorage
                 sessionStorage.setItem("token", token);
                 setName("");
                 setEmail("");
                 setPassword("");
-                // navigate('/');
+                navigate('/');
             } catch (error) {
                 alert("Falha ao realizar login.");
                 console.log(error);

@@ -19,7 +19,7 @@ export default function NavBar() {
 
   const confirmLogout = () => {
     setShowConfirmation(false);
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     navigate('/');
   };
 
