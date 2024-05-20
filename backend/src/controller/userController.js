@@ -121,6 +121,8 @@ class UserController {
     const users = await User.find();
     return res.status(200).send(users);
   }
+
+  static async 
 }
 
 module.exports = UserController;
