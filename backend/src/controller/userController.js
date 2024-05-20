@@ -63,6 +63,7 @@ class UserController {
       return res.status(422).json({ message: "É necessário usar uma senha." });
 
     const user = await User.findOne({ email });
+    console.log("user id: ", user.id);
 
     if(!user){
       return res

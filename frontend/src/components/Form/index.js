@@ -11,6 +11,7 @@ import Col from 'react-bootstrap/Col';
 
 import axios from "axios";
 import CryptoJS from "crypto-js";
+import {jwtDecode} from 'jwt-decode';
 import { SECRET } from "../../env";
 
 export default function Formulario({ title, fields, margin }) {
@@ -95,15 +96,18 @@ export default function Formulario({ title, fields, margin }) {
                 SECRET
             ).toString();
 
-            console.log("jsonCrypt: ", jsonCrypt);
-
             try {
                 var res = await axios.post("http://localhost:8080/api/user/login", {
                     jsonCrypt
                 });
 
-                console.log(res.data.message);
-                sessionStorage.setItem("token", res.data.token);
+                const response = res.data.token;
+                console.log("res: ", response);
+
+                let token = jwtDecode(response);
+                token = token.id;
+
+                sessionStorage.setItem("token", token);
                 setName("");
                 setEmail("");
                 setPassword("");
