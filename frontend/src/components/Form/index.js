@@ -3,16 +3,17 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from './styles.module.scss'
 
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 import axios from "axios";
 import CryptoJS from "crypto-js";
-import {jwtDecode} from 'jwt-decode';
 import { SECRET } from "../../env";
+import { jwtDecode } from 'jwt-decode';
+import api from '../../api/api';
 
 export default function Formulario({ title, fields, margin }) {
     const [formData, setFormData] = useState({});
@@ -66,14 +67,14 @@ export default function Formulario({ title, fields, margin }) {
                 SECRET
             ).toString();
 
-            console.log(jsonCrypt);
+            console.log(jsonCrypt, "jsonCrypt");
 
             try {
-                var res = await axios.post("http://localhost:8080/api/user/register", {
+                const res = await api.post("/user/register", {
                     jsonCrypt
                 });
 
-                console.log(res.data.message);
+                console.log(res.data.message, "res.data");
                 alert("Usuário Cadastrado com sucesso!");
                 setName("");
                 setEmail("");
@@ -81,7 +82,7 @@ export default function Formulario({ title, fields, margin }) {
                 navigate('/');
             } catch (error) {
                 alert("Falha ao criar usuário.");
-                console.log(error);
+                console.log(error, "error");
             }
         }
 
@@ -96,11 +97,9 @@ export default function Formulario({ title, fields, margin }) {
                 SECRET
             ).toString();
 
-            try {
-                var res = await axios.post("http://localhost:8080/api/user/login", {
-                    jsonCrypt
-                });
-
+            const res = await api.post("/user/login", {
+                jsonCrypt
+            }).then((res) => {
                 const response = res.data.token;
                 console.log("res: ", response);
 
@@ -112,10 +111,11 @@ export default function Formulario({ title, fields, margin }) {
                 setEmail("");
                 setPassword("");
                 navigate('/');
-            } catch (error) {
-                alert("Falha ao realizar login.");
-                console.log(error);
-            }
+            })
+                .catch((error) => {
+                    alert("Falha ao realizar login.");
+                    console.log(error, "error");
+                });
         }
     };
 

@@ -69,7 +69,7 @@ export default function HomePage() {
             await getWeather();
         }
         fetchData();
-        console.log(weather)
+        console.log(weather, "weather");
     }, [coordinates]);
 
     var settings = {
