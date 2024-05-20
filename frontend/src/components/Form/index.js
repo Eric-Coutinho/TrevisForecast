@@ -6,6 +6,8 @@ import styles from './styles.module.scss'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import axios from "axios";
 import CryptoJS from "crypto-js";
@@ -115,32 +117,36 @@ export default function Formulario({ title, fields }) {
 
     return (
         <Container className={styles.formContainer}>
-            <h2 style={{ textAlign: 'center' }}>
-                {title}
-            </h2>
-            <Form>
-                <Form.Group className="mb-3">
-                    {fields.map((field, i) => {
-                        let type = 'text';
+            <Row className={styles.cardRow}>
+                <Col sm="12" md="12" lg="6" className={styles.cardBody}>
+                    <h2 style={{ textAlign: 'center' }}>
+                        {title}
+                    </h2>
+                    <Form>
+                        <Form.Group className="mb-3">
+                            {fields.map((field, i) => {
+                                let type = 'text';
 
-                        if (field === 'Senha' || field === 'Confirmar Senha')
-                            type = 'password';
-                        else if (field == 'Email')
-                            type = 'email';
+                                if (field === 'Senha' || field === 'Confirmar Senha')
+                                    type = 'password';
+                                else if (field == 'Email')
+                                    type = 'email';
 
-                        return (
-                            <div key={i} className={styles.inputDiv}>
-                                <Form.Label>{field}</Form.Label>
-                                <Form.Control type={type} placeholder={field} onChange={(e) => handleInputChange(field, e.target.value)}></Form.Control>
-                            </div>
-                        )
-                    })}
-                </Form.Group>
-            </Form>
-            <div className={styles.btnArea}>
-                <Button variant='primary' className={styles.btn} onClick={handleSubmit} type='submit'>{title}</Button>
-                <Button variant='danger' className={styles.btn}>Cancelar</Button>
-            </div>
+                                return (
+                                    <div key={i} className={styles.inputDiv}>
+                                        <Form.Label>{field}</Form.Label>
+                                        <Form.Control type={type} placeholder={field} onChange={(e) => handleInputChange(field, e.target.value)}></Form.Control>
+                                    </div>
+                                )
+                            })}
+                        </Form.Group>
+                    </Form>
+                    <div className={styles.btnArea}>
+                        <Button variant='primary' className={styles.btn} onClick={handleSubmit} type='submit'>{title}</Button>
+                        <Button variant='danger' className={styles.btn}>Cancelar</Button>
+                    </div>
+                </Col>
+            </Row>
         </Container>
     )
 

@@ -9,10 +9,6 @@ export default function LoginPage() {
     let fields = ["Email", "Senha"];
 
     return (
-        <>
-            <Row style={{ marginTop: '15%' }}>
-                <Formulario title={"Login"} fields={fields} />
-            </Row>
-        </>
+        <Formulario title={"Login"} fields={fields} />
     )
 }
