@@ -123,6 +123,13 @@ class UserController {
     return res.status(200).send(users);
   }
 
+  static async findUserByID(req, res) {
+    const userid = req.params.id;
+
+    const user = await User.findById(userid);
+    return res.status(200).send(user);
+  }
+  
   static async createLocation(req, res) {
     const { id } = req.params;
     const { city, country, lat, long } = req.body.data;

@@ -4,14 +4,14 @@
     background-color: #e2e2e2;
     padding: 20px;
     border-radius: 20px;
-    margin: 10px;
+    margin: 0 10px;
 }
 
 .day {
     text-align: start;
     font-size: 18px;
     font-weight: 500;
-    color: #747474;
+    filter: brightness(90%);
 }
 
 .information {
@@ -30,7 +30,7 @@
 }
 
 .tempmin {
-    color: #747474;
+    filter: brightness(90%);
     font-weight: 500;
 }
 
