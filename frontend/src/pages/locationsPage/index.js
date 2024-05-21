@@ -4,10 +4,8 @@ import styles from "./styles.module.scss"
 
 export default function LocationsPage() {
     return (
-        <>
-            <div className={styles.mapaContainer}>
-                <MapaComponent />
-            </div>
-        </>
+        <div className={styles.mapaContainer}>
+            <MapaComponent />
+        </div>
     )
 }

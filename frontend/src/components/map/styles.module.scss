@@ -1,0 +1,12 @@
+.btn {
+    background-color: lightgrey;
+    padding: 0.5em;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.2em;
+}
+
+.btn:active {
+    transition: 0.3s;
+    background-color: rgb(150, 150, 150);
+}
