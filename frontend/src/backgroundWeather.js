@@ -1,8 +1,8 @@
 export function primary(condition) {
     return {
         backgroundColor: 
-            condition.includes('day') ? '#00c1e9' :
-            condition.includes('night') ? '#000' :
+            condition.includes('day') ? '#ffb35b' :
+            condition.includes('night') ? '#3d3d3d' :
             '#989898',
         color:
             condition.includes('day') ? 'white' :
@@ -21,8 +21,8 @@ export function secondary(condition) {
             condition.includes('rain') ? '#507e93' :
             condition.includes('showers') ? '#9ae3fd' :
             condition.includes('cloudy') ? '#d8d8d8' :
-            condition.includes('night') ? '#000' :
-            condition.includes('clear') ? '#00c1e9' :
+            condition.includes('night') ? '#3d3d3d' :
+            condition.includes('day') ? '#ffb35b' :
             '#a9a9a9',
         color:
             condition.includes('snow') ? 'black' :
