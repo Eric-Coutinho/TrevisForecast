@@ -7,5 +7,6 @@ route
     .post('/login', UserController.login)
     .delete('/delete/:id', UserController.delete)
     .get('/find', UserController.findUser)
+    .get('/find/:id', UserController.findUserByID)
 
 module.exports = route;

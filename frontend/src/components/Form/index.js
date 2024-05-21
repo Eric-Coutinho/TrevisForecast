@@ -13,7 +13,7 @@ import axios from "axios";
 import CryptoJS from "crypto-js";
 import { SECRET } from "../../env";
 import { jwtDecode } from 'jwt-decode';
-import api from '../../api/api';
+import { BackAPI } from '../../api/api';
 
 export default function Formulario({ title, fields, margin }) {
     const [formData, setFormData] = useState({});
@@ -70,7 +70,7 @@ export default function Formulario({ title, fields, margin }) {
             console.log(jsonCrypt, "jsonCrypt");
 
             try {
-                const res = await api.post("/user/register", {
+                const res = await BackAPI.post("/user/register", {
                     jsonCrypt
                 });
 
@@ -97,7 +97,7 @@ export default function Formulario({ title, fields, margin }) {
                 SECRET
             ).toString();
 
-            const res = await api.post("/user/login", {
+            const res = await BackAPI.post("/user/login", {
                 jsonCrypt
             }).then((res) => {
                 const response = res.data.token;

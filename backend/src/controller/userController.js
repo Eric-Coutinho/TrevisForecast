@@ -126,6 +126,13 @@ class UserController {
     const users = await User.find();
     return res.status(200).send(users);
   }
+
+  static async findUserByID(req, res) {
+    const userid = req.params.id;
+
+    const user = await User.findById(userid);
+    return res.status(200).send(user);
+  }
 }
 
 module.exports = UserController;
