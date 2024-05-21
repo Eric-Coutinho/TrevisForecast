@@ -11,19 +11,9 @@ export default function ProtectedRoute({ errorPage, targetPage }) {
             setPage(errorPage);
             return;
         }
-
-        const decodeToken = jwt_decode.jwtDecode(token)
-        const { exp } = decodeToken;
-        console.log(exp)
-
-        if (exp + '000' < Date.now()) {
-            setPage(errorPage)
-            return
-        }
-
         setPage(targetPage)
     }
-
+    
     useEffect(() => {
         renderPage();
     }, []);

@@ -1,9 +1,13 @@
 import MapaComponent from "../../components/map";
 
+import styles from "./styles.module.scss"
+
 export default function LocationsPage() {
-    return(
+    return (
         <>
-            <MapaComponent />
+            <div className={styles.mapaContainer}>
+                <MapaComponent />
+            </div>
         </>
     )
 }
