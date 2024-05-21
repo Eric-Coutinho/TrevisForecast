@@ -1,6 +1,7 @@
 const User = require("../Model/user");
 const jwt = require("jsonwebtoken");
 var CryptoJS = require("crypto-js");
+const LocationModel = require("../Model/locations");
 require("dotenv").config();
 
 class UserController {
@@ -25,14 +26,10 @@ class UserController {
       return res.status(422).json({ message: "Usuário já existe, tente novamente." });
     }
 
-    console.log("password: ", password);
-
     const passwordCrypt = CryptoJS.AES.encrypt(
       password,
       process.env.SECRET
     ).toString();
-
-    console.log("passwordCrypt: ", passwordCrypt);
 
     const user = new User({
       name: name,
@@ -67,9 +64,8 @@ class UserController {
       return res.status(422).json({ message: "É necessário usar uma senha." });
 
     const user = await User.findOne({ email });
-    console.log("user id: ", user.id);
 
-    if(!user){
+    if (!user) {
       return res
         .status(422)
         .send({ message: "Nenhum usuário encontrado." });
@@ -132,6 +128,39 @@ class UserController {
 
     const user = await User.findById(userid);
     return res.status(200).send(user);
+  }
+  
+  static async createLocation(req, res) {
+    const { id } = req.params;
+    const { city, country, lat, long } = req.body.data;
+
+    if (!city || !country || !lat || !long || !id)
+      return res.status(422).send({ message: "É necessário fornecer as informações." });
+
+    const newLocation = new LocationModel({
+      city: city,
+      country: country,
+      lat: lat,
+      long: long,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      deletedAt: null
+    });
+
+    try {
+      const user = await User.findById(id);
+
+      if (!user)
+        return res.status(404).send({ message: "Usuário não encontrado." });
+
+      user.locations.push(newLocation);
+
+      await user.save();
+
+      return res.status(200).send(user);
+    } catch (error) {
+      return res.status(500).send({ message: "Algo falhou.", data: error.message });
+    }
   }
 }
 

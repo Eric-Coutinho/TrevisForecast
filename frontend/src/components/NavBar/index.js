@@ -30,14 +30,16 @@ export default function NavBar() {
   return (
     <Navbar >
       <Container>
-        <Navbar.Brand style={{color: 'white'}}>
-          Trevisan Forecast
+        <Navbar.Brand style={{ color: 'white' }}>
+          <Link to={'/'} className={styles.link}>
+            Trevisan Forecast
+          </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>
             <Nav.Link>
-              <Link to={'/places'} className={styles.link}>
+              <Link to={'/locations'} className={styles.link}>
                 Localizações
               </Link>
             </Nav.Link>
