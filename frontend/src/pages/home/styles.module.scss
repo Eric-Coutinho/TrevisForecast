@@ -26,6 +26,20 @@
     border: 0;
 }
 
+.select {
+    padding: 10px;
+    border-radius: 20px;
+    border: 0;
+    outline: none;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.select option {
+    color: black;
+    background-color: white;
+}
+
 @media screen and (max-width: 576px) {
     .home {
         padding: 15px;
