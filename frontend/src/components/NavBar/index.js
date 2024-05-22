@@ -12,6 +12,7 @@ import { useState } from 'react';
 export default function NavBar() {
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const isLogged = sessionStorage.getItem('token');
 
   const logOut = () => {
     setShowConfirmation(true);
@@ -44,16 +45,16 @@ export default function NavBar() {
               </Link>
             </Nav.Link>
             <Nav.Link>
-              <Link to={'/login'} className={styles.link}>
+              <Link to={'/login'} className={styles.link} style={{ display: isLogged != null ? 'none' : 'block'}}>
                 Login
               </Link>
             </Nav.Link>
             <Nav.Link>
-              <Link to={'/register'} className={styles.link}>
+              <Link to={'/register'} className={styles.link} style={{ display: isLogged != null ? 'none' : 'block'}}>
                 Cadastro
               </Link>
             </Nav.Link>
-            <Nav.Link className={styles.link} onClick={() => logOut()}>
+            <Nav.Link style={{ display: isLogged != null ? 'block' : 'none'}} className={styles.link} onClick={() => logOut()}>
               Sair
             </Nav.Link>
           </Nav>

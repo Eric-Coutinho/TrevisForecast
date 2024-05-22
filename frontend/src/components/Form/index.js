@@ -17,9 +17,6 @@ import { BackAPI } from '../../api/api';
 
 export default function Formulario({ title, fields, margin }) {
     const [formData, setFormData] = useState({});
-    const [name, setName] = useState({});
-    const [email, setEmail] = useState({});
-    const [password, setPassword] = useState({});
 
     const navigate = useNavigate();
 
@@ -51,23 +48,17 @@ export default function Formulario({ title, fields, margin }) {
             return;
         }
 
-        setName(Nome);
-        setEmail(Email);
-        setPassword(Senha);
-
         if (title == "Registrar") {
             const json = {
-                name,
-                email,
-                password
+                name: Nome,
+                email: Email,
+                password: Senha
             };
-
+            console.log(json)
             const jsonCrypt = CryptoJS.AES.encrypt(
                 JSON.stringify(json),
                 SECRET
             ).toString();
-
-            console.log(jsonCrypt, "jsonCrypt");
 
             try {
                 const res = await BackAPI.post("/user/register", {
@@ -76,9 +67,6 @@ export default function Formulario({ title, fields, margin }) {
 
                 console.log(res.data.message, "res.data");
                 alert("Usuário Cadastrado com sucesso!");
-                setName("");
-                setEmail("");
-                setPassword("");
                 navigate('/');
             } catch (error) {
                 alert("Falha ao criar usuário.");
@@ -88,10 +76,10 @@ export default function Formulario({ title, fields, margin }) {
 
         else if (title == "Login") {
             const json = {
-                email,
-                password
+                email: Email,
+                password: Senha
             };
-
+            console.log(json)
             const jsonCrypt = CryptoJS.AES.encrypt(
                 JSON.stringify(json),
                 SECRET
@@ -107,9 +95,6 @@ export default function Formulario({ title, fields, margin }) {
                 token = token.id;
 
                 sessionStorage.setItem("token", token);
-                setName("");
-                setEmail("");
-                setPassword("");
                 navigate('/');
             })
                 .catch((error) => {

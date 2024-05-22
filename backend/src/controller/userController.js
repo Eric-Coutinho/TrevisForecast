@@ -44,6 +44,7 @@ class UserController {
       await User.create(user);
       return res.status(201).json({ message: "Usuário cadastrado com sucesso." });
     } catch (error) {
+      console.log(error);
       return res.status(500).json({ message: "Algo falhou.", error: error.message });
     }
   }

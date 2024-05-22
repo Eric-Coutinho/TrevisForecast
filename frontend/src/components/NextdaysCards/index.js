@@ -19,7 +19,20 @@ export default function NextdaysCard({ weather }) {
                 <img
                     src={`weather_types/${weather.icon}.svg`}
                     alt="Weather Icon" className={styles.icon}
-                    style={{ width: weather.icon == 'clear-day' ? '5em' : '7em', height: weather.icon == 'clear' ? '5em' : '7em'}}
+                    style={{
+                        width: weather.icon == 'clear-day' ? '5em' : '7em',
+                        height: weather.icon == 'clear' ? '5em' : '7em',
+                        filter: condition.includes('snow') ? '' :
+                                condition.includes('sleet') ? '' :
+                                condition.includes('thunder') ? 'invert(100%)':
+                                condition.includes('hail') ? 'invert(100%)' :
+                                condition.includes('rain') ? 'invert(100%)' :
+                                condition.includes('showers') ? '' :
+                                condition.includes('cloudy') ? '' :
+                                condition.includes('night') ? 'invert(100%)' :
+                                condition.includes('clear') ? 'invert(100%)' :
+                                '#black'
+                    }}
                 />
                 <div className={styles.tempdata}>
                     <div>

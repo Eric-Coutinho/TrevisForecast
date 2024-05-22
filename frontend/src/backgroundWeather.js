@@ -34,6 +34,6 @@ export function secondary(condition) {
             condition.includes('cloudy') ? 'black' :
             condition.includes('night') ? 'white' :
             condition.includes('clear') ? 'white' :
-            '#000'
+            '#black'
     }
 }
