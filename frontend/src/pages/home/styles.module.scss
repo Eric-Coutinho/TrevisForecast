@@ -26,6 +26,11 @@
     border: 0;
 }
 
+.options {
+    display: 'flex';
+    flex-direction: row;
+}
+
 .select {
     padding: 10px;
     border-radius: 20px;
@@ -33,11 +38,23 @@
     outline: none;
     font-size: 18px;
     font-weight: 500;
+    margin-right: 10px;
 }
 
 .select option {
     color: black;
     background-color: white;
+}
+
+.addLocation {
+    width: 50px;
+    padding: 10px;
+    border-radius: 20px;
+    border: 0;
+}
+
+.addLocation:hover {
+    filter: brightness(90%);
 }
 
 @media screen and (max-width: 576px) {

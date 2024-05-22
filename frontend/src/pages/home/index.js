@@ -29,7 +29,7 @@ export default function HomePage() {
     ])
 
     function saveLocalStorage(key, item) {
-        if(!localStorage.getItem(`${key}`) || localStorage.getItem(`${key}`) == null)
+        if (!localStorage.getItem(`${key}`) || localStorage.getItem(`${key}`) == null)
             localStorage.setItem(`${key}`, item);
     }
 
@@ -194,8 +194,8 @@ export default function HomePage() {
         <Container className={styles.home}>
             {weather != null && position != null && locations != null &&
                 <div>
-                    <Row style={{ marginBottom: '1em', zIndex: 1000 }}>
-                        <Col className={styles.selectContainer} sm="3">
+                    <Row style={{marginBottom: '1em', zIndex: 1000 }}>
+                        <Col sm="4" className={styles.options}>
                             <select className={styles.select} onChange={handleSelect} style={secondary(weather.currentConditions.icon)}>
                                 <option value='CurrLocation' selected>Localização atual</option>
                                 {
@@ -204,6 +204,7 @@ export default function HomePage() {
                                     )
                                 }
                             </select>
+                            <button className={styles.addLocation} style={secondary(weather.currentConditions.icon)}>✚</button>
                         </Col>
                     </Row>
                     <Row className={styles.row}>
@@ -227,6 +228,6 @@ export default function HomePage() {
                     </Row>
                 </div>
             }
-        </Container>
+        </Container >
     )
 }
