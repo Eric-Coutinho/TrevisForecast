@@ -3,29 +3,43 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaf
 
 import styles from "./styles.module.scss"
 
-function LocationMarker() {
-    const [popupPosition, setPopupPosition] = useState(null);
-
-    useMapEvents({
-        click(e) {
-            setPopupPosition(e.latlng);
-        }
-    });
-
-    return popupPosition && (
-        <Marker position={popupPosition}>
-            <Popup position={popupPosition}>
-                <button className={styles.btn}>
-                    Adicionar Localização
-                </button>
-            </Popup>
-        </Marker>
-    );
-}
+import Button from 'react-bootstrap/Button';
 
 export default function MapaComponent() {
+    const [popupPosition, setPopupPosition] = useState(null);
+    const [newPosition, setNewPosition] = useState(null);
+    const [location, setLocation] = useState(null);
+
+    let lat = -25.426770
+    let long = -49.265924
+
+    let coordsUser = localStorage.getItem('coordinates');
+    coordsUser = JSON.parse(coordsUser);
+    if(coordsUser != null) {
+        lat = coordsUser.latitude;
+        long = coordsUser.longitude;
+    }
+    
+    function LocationMarker() {
+        useMapEvents({
+            click(e) {
+                setPopupPosition(e.latlng);
+                setNewPosition(e.latlng);
+                console.log('new Position: ', newPosition);
+            }
+        });
+    
+        return popupPosition && (
+            <Marker position={popupPosition}>
+                <Popup position={popupPosition}>
+                <Button variant="success" onClick={() => setLocation(newPosition)}>Adicionar Localização</Button>
+                </Popup>
+            </Marker>
+        );
+    }
+
     return (
-        <MapContainer center={[-25.45, -49.298]} zoom={13} scrollWheelZoom={true}>
+        <MapContainer center={[lat, long]} zoom={13} minZoom={4} scrollWheelZoom={true}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -28,6 +28,11 @@ export default function HomePage() {
         { city: 'Sydney', lat: -33.8688, long: 151.2093 }
     ])
 
+    function saveLocalStorage(key, item) {
+        if(!localStorage.getItem(`${key}`) || localStorage.getItem(`${key}`) == null)
+            localStorage.setItem(`${key}`, item);
+    }
+
     function getCoordinates() {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(async (coordinate) => {
@@ -35,6 +40,7 @@ export default function HomePage() {
                     latitude: coordinate.coords.latitude,
                     longitude: coordinate.coords.longitude,
                 });
+                saveLocalStorage('coordinates', JSON.stringify(coordinates));
             });
             return;
         }
@@ -50,6 +56,7 @@ export default function HomePage() {
                 state: data.state,
                 country: data.country
             });
+            saveLocalStorage('position', JSON.stringify(position));
         }
     }
 
