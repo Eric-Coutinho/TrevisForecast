@@ -54,7 +54,7 @@ export default function Formulario({ title, fields, margin }) {
                 email: Email,
                 password: Senha
             };
-            console.log(json)
+
             const jsonCrypt = CryptoJS.AES.encrypt(
                 JSON.stringify(json),
                 SECRET
@@ -65,7 +65,6 @@ export default function Formulario({ title, fields, margin }) {
                     jsonCrypt
                 });
 
-                console.log(res.data.message, "res.data");
                 alert("Usuário Cadastrado com sucesso!");
                 navigate('/');
             } catch (error) {
@@ -79,7 +78,7 @@ export default function Formulario({ title, fields, margin }) {
                 email: Email,
                 password: Senha
             };
-            console.log(json)
+
             const jsonCrypt = CryptoJS.AES.encrypt(
                 JSON.stringify(json),
                 SECRET
@@ -89,7 +88,6 @@ export default function Formulario({ title, fields, margin }) {
                 jsonCrypt
             }).then((res) => {
                 const response = res.data.token;
-                console.log("res: ", response);
 
                 let token = jwtDecode(response);
                 token = token.id;

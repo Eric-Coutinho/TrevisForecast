@@ -7,14 +7,17 @@ import Col from 'react-bootstrap/Col';
 import styles from './styles.module.scss';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 import TemperatureCard from '../../components/temperatureCard';
 import WeatherCard from '../../components/weatherCard';
 import LocalCard from '../../components/localCard';
+
 import Slider from "react-slick";
 
 import { VisualCrossingAPI } from '../../api/visualcrossing';
 import { OpenCageAPI } from '../../api/opencage';
 import { KEY, KEY2 } from '../../env';
+import { secondary } from '../../backgroundWeather';
 import NextdaysCard from '../../components/NextdaysCards';
 
 export default function HomePage() {
@@ -23,9 +26,6 @@ export default function HomePage() {
     const [weather, setWeather] = useState(null);
     const [locations, setLocations] = useState([
         { city: 'Nova York', lat: 40.7128, long: -74.0060 },
-        { city: 'Tóquio', lat: 35.6895, long: 139.6917 },
-        { city: 'Londres', lat: 51.5074, long: -0.1278 },
-        { city: 'Sydney', lat: -33.8688, long: 151.2093 }
     ])
 
     useEffect(() => {
@@ -96,6 +96,15 @@ export default function HomePage() {
         ]);
     }
 
+    const handleSelect = async (e) => {
+        const value = e.target.value;
+        if (value == 'CurrLocation') {
+            await changeInfo(coordinates.latitude, coordinates.longitude);
+            return;
+        }
+        await changeInfo(locations[value].lat, locations[value].long);
+    }
+
     useEffect(() => {
         getCoordinates();
     }, [])
@@ -112,7 +121,6 @@ export default function HomePage() {
             await getWeather();
         }
         fetchData();
-        console.log(weather, "weather");
     }, [coordinates]);
 
     var settings1 = {
@@ -155,7 +163,7 @@ export default function HomePage() {
     var settings2 = {
         infinite: true,
         speed: 800,
-        slidesToShow: 4,
+        slidesToShow: 1,
         slidesToScroll: 2,
         arrows: false,
         draggable: false,
@@ -194,14 +202,15 @@ export default function HomePage() {
             {weather != null && position != null && locations != null &&
                 <div>
                     <Row style={{ marginBottom: '1em', zIndex: 1000 }}>
-                        <Col sm="12">
-                            <Slider {...settings2}>
-                                {locations.map((location, i) => {
-                                    return (
-                                        <LocalCard weather={weather} local={location} key={i} onClick={() => changeInfo(location.lat, location.long)}/>
+                        <Col className={styles.selectContainer} sm="3">
+                            <select className={styles.select} onChange={handleSelect} style={secondary(weather.currentConditions.icon)}>
+                                <option value='CurrLocation' selected>Localização atual</option>
+                                {
+                                    locations.map((location, i) => 
+                                        <option key={i} value={i}>{location.city}</option>
                                     )
-                                })}
-                            </Slider>
+                                }
+                            </select>
                         </Col>
                     </Row>
                     <Row className={styles.row}>

@@ -40,7 +40,19 @@ export default function WeatherCard({ weather }) {
                     <div>Wind speed</div>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         {current.windspeed} km/h
-                        <img src="arrow.svg" className={styles.image} style={{ transform: `rotate(${current.winddir + 180}deg)` }} />
+                        <img src="arrow.svg" className={styles.image} style={{
+                            transform: `rotate(${current.winddir + 180}deg)`,
+                            filter: condition.includes('snow') ? '' :
+                                condition.includes('sleet') ? '' :
+                                condition.includes('thunder') ? 'invert(100%)':
+                                condition.includes('hail') ? 'invert(100%)' :
+                                condition.includes('rain') ? 'invert(100%)' :
+                                condition.includes('showers') ? '' :
+                                condition.includes('cloudy') ? '' :
+                                condition.includes('night') ? 'invert(100%)' :
+                                condition.includes('clear') ? 'invert(100%)' :
+                                '#black'
+                        }} />
                     </div>
                 </Col>
             </Row>
