@@ -60,7 +60,8 @@ export default function MapaComponent() {
                         const response = await BackAPI.post(`/user/newLocation/${id}`, {
                             location
                         });
-                        console.log(response);
+                        alert('Localização adicionada com sucesso.');
+                        
                     }}>Adicionar Localização</Button>
                 </Popup>
             </Marker>
