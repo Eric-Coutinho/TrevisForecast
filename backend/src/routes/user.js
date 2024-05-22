@@ -5,7 +5,8 @@ const route = express.Router();
 route
     .post('/register', UserController.register)
     .post('/login', UserController.login)
-    .put('/newLocation', UserController.createLocation)
+    .post('/newLocation/:id', UserController.createLocation)
+    .post('/removeLocation/:id', UserController.removeLocation)
     .delete('/delete/:id', UserController.delete)
     .get('/find', UserController.findUser)
     .get('/find/:id', UserController.findUserByID)

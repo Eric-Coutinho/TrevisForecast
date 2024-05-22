@@ -130,12 +130,17 @@ class UserController {
     const user = await User.findById(userid);
     return res.status(200).send(user);
   }
-  
+
   static async createLocation(req, res) {
     const { id } = req.params;
-    const { city, country, lat, long } = req.body.data;
+    const location = req.body.location;
 
-    if (!city || !country || !lat || !long || !id)
+    let city = location.city;
+    let country = location.country;
+    let lat = location.lat;
+    let long = location.long;
+
+    if (!location || !city || !country || !lat || !long || !id)
       return res.status(422).send({ message: "É necessário fornecer as informações." });
 
     const newLocation = new LocationModel({
@@ -155,6 +160,39 @@ class UserController {
         return res.status(404).send({ message: "Usuário não encontrado." });
 
       user.locations.push(newLocation);
+
+      await user.save();
+
+      return res.status(200).send(user);
+    } catch (error) {
+      return res.status(500).send({ message: "Algo falhou.", data: error.message });
+    }
+  }
+
+  static async removeLocation(req, res) {
+    const { id } = req.params;
+    const locationToRemove = req.body.location;
+
+    if (!locationToRemove || !id)
+      return res.status(422).send({ message: "É necessário fornecer as informações." });
+
+    try {
+      const user = await User.findById(id);
+
+      if (!user)
+        return res.status(404).send({ message: "Usuário não encontrado." });
+
+      const indexToRemove = user.locations.findIndex(loc => (
+        loc.city === locationToRemove.city &&
+        loc.country === locationToRemove.country &&
+        loc.lat === locationToRemove.lat &&
+        loc.long === locationToRemove.long
+      ));
+
+      if (indexToRemove === -1)
+        return res.status(404).send({ message: "Localização não encontrada para este usuário." });
+
+      user.locations.splice(indexToRemove, 1);
 
       await user.save();
 
