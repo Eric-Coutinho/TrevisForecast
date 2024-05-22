@@ -28,6 +28,13 @@ export default function HomePage() {
         { city: 'Sydney', lat: -33.8688, long: 151.2093 }
     ])
 
+    useEffect(() => {
+        let newLocation = localStorage.getItem('Location');
+
+        if(newLocation)
+            locations.push(newLocation);
+    }, [])
+
     function saveLocalStorage(key, item) {
         if(!localStorage.getItem(`${key}`) || localStorage.getItem(`${key}`) == null)
             localStorage.setItem(`${key}`, item);

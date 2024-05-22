@@ -132,10 +132,16 @@ class UserController {
   }
   
   static async createLocation(req, res) {
+    console.log(1);
     const { id } = req.params;
-    const { city, country, lat, long } = req.body.data;
+    const location = req.body.location;
 
-    if (!city || !country || !lat || !long || !id)
+    let city = location.city;
+    let country = location.country;
+    let lat = location.lat;
+    let long = location.long;
+
+    if (!location || !city || !country || !lat || !long || !id)
       return res.status(422).send({ message: "É necessário fornecer as informações." });
 
     const newLocation = new LocationModel({
