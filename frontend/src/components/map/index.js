@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
+import { useNavigate } from 'react-router-dom';
 
 import styles from "./styles.module.scss"
 
@@ -13,6 +14,7 @@ export default function MapaComponent() {
     const [popupPosition, setPopupPosition] = useState(null);
     const [newPosition, setNewPosition] = useState(null);
     const [position, setPosition] = useState(null);
+    const navigate = useNavigate();
 
     let lat = -25.426770
     let long = -49.265924
@@ -61,6 +63,7 @@ export default function MapaComponent() {
                             location
                         });
                         alert('Localização adicionada com sucesso.');
+                        navigate('/locations');
                         
                     }}>Adicionar Localização</Button>
                 </Popup>

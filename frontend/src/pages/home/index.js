@@ -19,6 +19,8 @@ import { OpenCageAPI } from '../../api/opencage';
 import { KEY, KEY2 } from '../../env';
 import { secondary } from '../../backgroundWeather';
 import NextdaysCard from '../../components/NextdaysCards';
+import { useNavigate } from 'react-router-dom';
+import { BackAPI } from '../../api/api';
 
 export default function HomePage() {
     const [coordinates, setCoordinates] = useState(null);
@@ -27,11 +29,21 @@ export default function HomePage() {
     const [locations, setLocations] = useState([]);
     var isLogged = sessionStorage.getItem('token');
 
-    useEffect(() => {
-        let newLocation = localStorage.getItem('Location');
+    const navigate = useNavigate();
 
-        if(newLocation)
-            locations.push(newLocation);
+    useEffect(() => {
+        async function fetchData() {            
+            if(isLogged) {
+                const id = sessionStorage.getItem('token');
+                
+                const res = await BackAPI.get(`/user/find/${id}`);
+                
+                setLocations(res.data.locations)
+                console.log(res.data.locations)
+
+            }
+        }
+        fetchData();
     }, [])
 
     function saveLocalStorage(key, item) {
@@ -200,18 +212,18 @@ export default function HomePage() {
         <Container className={styles.home}>
             {weather != null && position != null && locations != null &&
                 <div>
-                    { isLogged &&
-                        <Row style={{marginBottom: '1em', zIndex: 1000 }}>
+                    {isLogged &&
+                        <Row style={{ marginBottom: '1em', zIndex: 1000 }}>
                             <Col sm="4" className={styles.options}>
                                 <select className={styles.select} onChange={handleSelect} style={secondary(weather.currentConditions.icon)}>
                                     <option value='CurrLocation' selected>Localização atual</option>
                                     {
-                                        locations.map((location, i) => 
-                                            <option key={i} value={i}>{location.city}</option>
+                                        locations.map((location, i) =>
+                                            <option key={i} value={i}>{location.city ? location.city : location.country}</option>
                                         )
                                     }
                                 </select>
-                                <button className={styles.addLocation} style={secondary(weather.currentConditions.icon)}>✚</button>
+                                <button className={styles.addLocation} style={secondary(weather.currentConditions.icon)} onClick={() => navigate('/locations')}>✚</button>
                             </Col>
                         </Row>
                     }

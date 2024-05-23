@@ -2,12 +2,10 @@ const mongoose = require("mongoose");
 
 const LocationSchema = new mongoose.Schema({
   city: {
-    type: String,
-    required: true,
+    type: String
   },
   country: {
-    type: String,
-    required: true,
+    type: String
   },
   lat: {
     type: Number,

@@ -140,7 +140,7 @@ class UserController {
     let lat = location.lat;
     let long = location.long;
 
-    if (!location || !city || !country || !lat || !long || !id)
+    if (!location || !lat || !long || !id)
       return res.status(422).send({ message: "É necessário fornecer as informações." });
 
     const newLocation = new LocationModel({

@@ -40,9 +40,6 @@ export default function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>
             <Nav.Link>
-              <Link to={'/locations'} className={styles.link} style={{ display: isLogged != null ? 'block' : 'none'}}>
-                Localizações
-              </Link>
             </Nav.Link>
             <Nav.Link>
               <Link to={'/login'} className={styles.link} style={{ display: isLogged != null ? 'none' : 'block'}}>
