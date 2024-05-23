@@ -63,7 +63,8 @@ export default function MapaComponent() {
                             location
                         });
                         alert('Localização adicionada com sucesso.');
-                        navigate('/locations');
+                        navigate('/');
+                        navigate(0);
                         
                     }}>Adicionar Localização</Button>
                 </Popup>
