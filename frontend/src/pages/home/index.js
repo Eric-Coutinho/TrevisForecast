@@ -53,10 +53,18 @@ export default function HomePage() {
 
     function getCoordinates() {
         if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(async (coordinate) => {
+            navigator.geolocation.getCurrentPosition(
+            async (coordinate) => {
                 setCoordinates({
                     latitude: coordinate.coords.latitude,
                     longitude: coordinate.coords.longitude,
+                });
+                saveLocalStorage('coordinates', JSON.stringify(coordinates));
+            },
+            (error) => {
+                setCoordinates({
+                    latitude: -15.8267,
+                    longitude: -47.9218
                 });
                 saveLocalStorage('coordinates', JSON.stringify(coordinates));
             });
