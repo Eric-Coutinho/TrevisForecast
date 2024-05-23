@@ -6,6 +6,7 @@ import { secondary } from "../../backgroundWeather";
 export default function NextdaysCard({ weather }) {
     const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     const nextdays = new Date(weather.datetime);
+    nextdays.setDate(nextdays.getDate() + 1);
     var condition = weather.icon
     return (
         <div
