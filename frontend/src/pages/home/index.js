@@ -222,7 +222,7 @@ export default function HomePage() {
                 <div>
                     {isLogged &&
                         <Row style={{ marginBottom: '1em', zIndex: 1000 }}>
-                            <Col sm="4" className={styles.options}>
+                            <Col sm="12" className={styles.options}>
                                 <select className={styles.select} onChange={handleSelect} style={secondary(weather.currentConditions.icon)}>
                                     <option value='CurrLocation' selected>Localização atual</option>
                                     {
