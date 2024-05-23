@@ -59,7 +59,7 @@ export default function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>
-            <Nav.Link style={{ display: isLogged != null ? 'block' : 'none'}} className={styles.link} onClick={() => deleteAccount()}>
+            <Nav.Link style={{ display: isLogged != null ? 'block' : 'none', width: 'max-content'}} className={styles.link} onClick={() => deleteAccount()}>
               Deletar Conta
             </Nav.Link>
             <Nav.Link>
