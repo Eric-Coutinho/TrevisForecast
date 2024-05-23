@@ -103,7 +103,7 @@ class UserController {
   static async delete(req, res) {
     var params = req.params;
     const { id } = params;
-
+    
     if (!id)
       return res.status(422).send({ message: "É necessário fornecer o ID." });
 
