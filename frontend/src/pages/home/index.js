@@ -24,9 +24,8 @@ export default function HomePage() {
     const [coordinates, setCoordinates] = useState(null);
     const [position, setPosition] = useState(null);
     const [weather, setWeather] = useState(null);
-    const [locations, setLocations] = useState([
-        { city: 'Nova York', lat: 40.7128, long: -74.0060 },
-    ])
+    const [locations, setLocations] = useState([]);
+    var isLogged = sessionStorage.getItem('token');
 
     useEffect(() => {
         let newLocation = localStorage.getItem('Location');
@@ -201,19 +200,21 @@ export default function HomePage() {
         <Container className={styles.home}>
             {weather != null && position != null && locations != null &&
                 <div>
-                    <Row style={{marginBottom: '1em', zIndex: 1000 }}>
-                        <Col sm="4" className={styles.options}>
-                            <select className={styles.select} onChange={handleSelect} style={secondary(weather.currentConditions.icon)}>
-                                <option value='CurrLocation' selected>Localização atual</option>
-                                {
-                                    locations.map((location, i) => 
-                                        <option key={i} value={i}>{location.city}</option>
-                                    )
-                                }
-                            </select>
-                            <button className={styles.addLocation} style={secondary(weather.currentConditions.icon)}>✚</button>
-                        </Col>
-                    </Row>
+                    { isLogged &&
+                        <Row style={{marginBottom: '1em', zIndex: 1000 }}>
+                            <Col sm="4" className={styles.options}>
+                                <select className={styles.select} onChange={handleSelect} style={secondary(weather.currentConditions.icon)}>
+                                    <option value='CurrLocation' selected>Localização atual</option>
+                                    {
+                                        locations.map((location, i) => 
+                                            <option key={i} value={i}>{location.city}</option>
+                                        )
+                                    }
+                                </select>
+                                <button className={styles.addLocation} style={secondary(weather.currentConditions.icon)}>✚</button>
+                            </Col>
+                        </Row>
+                    }
                     <Row className={styles.row}>
                         <Col sm="12" md="12" lg="12" className={styles.col}>
                             <TemperatureCard position={position} weather={weather} />
