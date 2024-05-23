@@ -7,7 +7,7 @@ route
     .post('/login', UserController.login)
     .post('/newLocation/:id', UserController.createLocation)
     .post('/removeLocation/:id', UserController.removeLocation)
-    .delete('/delete/:id', UserController.delete)
+    .post('/delete/:id', UserController.delete)
     .get('/find', UserController.findUser)
     .get('/find/:id', UserController.findUserByID)
 
